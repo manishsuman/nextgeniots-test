@@ -1,0 +1,11 @@
+.form .title,
+.form .description{
+  width: 100%;
+  font-size: 16px;
+}
+.form-title{
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+
