@@ -50,7 +50,7 @@ class Private extends React.Component {
     console.log("authState",authState);
     return (
       <React.Fragment>
-        {authState =="true" ?
+        {authState =="true" &&
         <Container className="container" maxWidth="sm">
         <Stack spacing={2} direction="row">
           <Typography className="form-title" variant="h4" gutterBottom component="div">
@@ -90,7 +90,7 @@ class Private extends React.Component {
           </Grid>
         </Box>
       </Container>
-        :""}
+        }
         
       </React.Fragment>
     )
