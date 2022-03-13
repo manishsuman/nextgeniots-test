@@ -13,7 +13,6 @@ import fire from "../../config/firebase";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Dialog from './dialog';
 import './public.css';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -31,10 +30,12 @@ class Public extends React.Component {
       dialogState:false
     }
   }
+  //Change sort dropdown value
   handleSort = (value) => {
     this.setState({ sortValue: value });
   }
   componentDidMount = () => {
+    //Fetch data from firebase
     localStorage.setItem("auth",false);
     const listRef = fire.database().ref('todo');
     listRef.on('value', (snapshot) => {
@@ -46,21 +47,21 @@ class Public extends React.Component {
       this.setState({ todoList: listArr });
     });
   }
+  //Delete item
   handleDelete=(key)=>{
     const userRef = fire.database().ref('todo').child(key);
       userRef.remove();
   }
+  //Redirect to Creat new page
   handleCreate=()=>{
     localStorage.setItem("auth",true);
     window.location="/create-new";
-  }
-  closeHandler = () => {
-    this.setState({ dialogState: false });
   }
   render() {
     var listToShow = this.state.todoList;
     var sortValue = this.state.sortValue;
     var handleDelete = this.handleDelete;
+    //Sorting
     if (sortValue != '') {
       listToShow = listToShow.sort(function (a, b) {
         if (sortValue == 'ascending') {
@@ -69,8 +70,6 @@ class Public extends React.Component {
           return b['title'].localeCompare(a['title']);
         } else if (sortValue == 'most-recent') {
           return b.timestamp - a.timestamp
-        } else {
-          return a['id'].toString().localeCompare(b['id'].toString());
         }
       });
     }
@@ -107,8 +106,14 @@ class Public extends React.Component {
                     <Grid item xs={11}>
                       <Item>
                         <Typography align="left" variant="caption" display="block" gutterBottom>
-                          {i.date}
+                          Created on {i.date}
                         </Typography>
+                       {i.todoDate&&
+                        <Typography align="left" variant="caption" display="block" gutterBottom>
+                          Due date {i.todoDate}
+                        </Typography>
+                       }
+                        
                         <Typography align="left" variant="h4" gutterBottom component="div">
                           {i.title}
                         </Typography>
@@ -125,11 +130,9 @@ class Public extends React.Component {
                   </Grid>
                 )
               })}
-
             </Grid>
           </Box>
         </Container>
-        <Dialog open={this.state.dialogState} onClose={this.closeHandler}/>
       </React.Fragment>
     )
   }
