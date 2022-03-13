@@ -89,7 +89,9 @@ class Private extends React.Component {
             </Typography>
           </Stack>
           <Box className="form" sx={{ flexGrow: 1 }}>
+          <form>
             <Grid container rowSpacing={4} columnSpacing={{ xs: 4, sm: 5, md: 6 }}>
+              
               <Grid className="listItem" item xs={12} >
                 <TextField
                   id="outlined-basic"
@@ -127,12 +129,14 @@ class Private extends React.Component {
               <Grid item lg={12}>
                 <Button className="submit" variant="contained" size="large" onClick={this.handleSubmit} disabled={!this.state.title} >Submit</Button>
               </Grid>
+              
               <Grid item lg={12}>
                 <Link href="/" underline="hover">
                   Back
                 </Link>
               </Grid>
             </Grid>
+            </form>
           </Box>
         </Container>
         <Snackbar open={this.state.open} autoHideDuration={6000} onClose={this.handleClose}>
